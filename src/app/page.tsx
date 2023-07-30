@@ -1,53 +1,66 @@
 "use client";
 
 import {
-  Itinerary as ItineraryResponse,
+  Itinerary as ItineraryType,
+  Input,
   itinerary as itinerarySchema,
-  Schema,
 } from "./schema";
 import React from "react";
 import Form from "./components/Form";
 import Itinerary from "./components/Itinerary";
+import Button from "@/components/Button";
+import { getStripe } from "./lib/stripe";
+import { it } from "node:test";
 
 export default function Home() {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [input, setInput] = React.useState<Schema | null>();
-  const [itinerary, setItinerary] = React.useState<ItineraryResponse | null>(
-    null
-  );
+  const [itinerary, setItinerary] = React.useState<ItineraryType | null>(null);
 
-  const handleSubmit = (input: Schema) => {
-    setInput(input);
+  const handleSubmit = (input: Input) => {
     getItinerary(input);
   };
 
-  const getItinerary = async (data: Schema) => {
-    setIsLoading(true);
-    setItinerary(null);
+  const handlePayment = async () => {
+    if (!itinerary) {
+      return;
+    }
 
-    const response = await fetch(
-      "http://localhost:3000/api/generate/itinerary/",
-      {
-        method: "post",
-        body: JSON.stringify(data),
-      }
-    );
-
-    const json = await response.json();
-
-    setIsLoading(false);
-    setItinerary(itinerarySchema.parse(json.result));
-  };
-
-  const saveItinerary = async () => {
-    console.log(input, itinerary);
-
-    const response = await fetch("http://localhost:3000/api/itinerary/", {
+    const response = await fetch("http://localhost:3000/api/checkout/", {
       method: "post",
-      body: JSON.stringify({ input, itinerary }),
+      body: JSON.stringify({ itineraryId: itinerary.id }),
     });
 
     const json = await response.json();
+
+    if (!json.ok) {
+      return;
+    }
+
+    const stripe = await getStripe();
+
+    if (!stripe) {
+      return;
+    }
+
+    await stripe.redirectToCheckout({ sessionId: json.result.id });
+  };
+
+  const getItinerary = async (data: Input) => {
+    setIsLoading(true);
+    setItinerary(null);
+
+    const response = await fetch("http://localhost:3000/api/itinerary/", {
+      method: "post",
+      body: JSON.stringify(data),
+    });
+
+    const json = await response.json();
+
+    if (json.ok) {
+      setItinerary(itinerarySchema.parse(json.result));
+    }
+
+    setIsLoading(false);
   };
 
   return (
@@ -77,7 +90,7 @@ export default function Home() {
           </p>
         )}
         {itinerary && (
-          <Itinerary itinerary={itinerary} onSave={saveItinerary} />
+          <Itinerary itinerary={itinerary.output} onSubmit={handlePayment} />
         )}
       </div>
     </main>

@@ -16,7 +16,7 @@ export default function Dialog({ title, children, ...props }: DialogProps) {
   return (
     <div {...dialogProps} ref={ref}>
       {title && (
-        <h3 {...titleProps} className="mt-0">
+        <h3 {...titleProps} className="mt-0 text-2xl font-bold">
           {title}
         </h3>
       )}

@@ -2,7 +2,7 @@ import z from "zod";
 
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
 
-export const schema = z
+export const input = z
   .object({
     destination: z.string().min(1, { message: "Please fill in a destination" }),
     description: z.string().min(1, { message: "Please fill in a description" }),
@@ -23,7 +23,7 @@ export const schema = z
     }
   );
 
-export const itinerary = z.object({
+export const output = z.object({
   title: z.string().min(1),
   days: z.array(
     z.object({
@@ -39,5 +39,13 @@ export const itinerary = z.object({
   ),
 });
 
-export type Schema = z.infer<typeof schema>;
+export const itinerary = z.object({
+  id: z.string().min(1),
+  input,
+  output,
+  activated: z.boolean().default(false),
+});
+
+export type Input = z.infer<typeof input>;
+export type Output = z.infer<typeof output>;
 export type Itinerary = z.infer<typeof itinerary>;

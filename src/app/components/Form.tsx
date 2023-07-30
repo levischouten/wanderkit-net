@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { schema, Schema } from "../schema";
+import { input, Schema } from "../schema";
 import DateRangePicker from "@/components/DateRangePicker";
 import { getLocalTimeZone, parseDate, today } from "@internationalized/date";
 import React from "react";
@@ -18,7 +18,7 @@ export default function Form(props: FormProps) {
     watch,
     setValue,
   } = useForm<Schema>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(input),
   });
 
   return (

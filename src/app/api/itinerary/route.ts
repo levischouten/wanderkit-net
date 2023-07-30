@@ -1,27 +1,77 @@
-import { client } from "@/app/lib/mongodb";
-import {
-  schema as inputSchema,
-  itinerary as itinerarySchema,
-} from "@/app/schema";
+import { Configuration, OpenAIApi } from "openai-edge";
 import { NextResponse } from "next/server";
+import { output, input, itinerary } from "@/app/schema";
+import { client } from "@/app/lib/mongodb";
+
+const config = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(config);
 
 export async function POST(req: Request) {
   try {
+    const body = await req.json();
+    const parsedInput = input.parse(body);
+
     await client.connect();
     const db = client.db("tripwire");
 
-    const { input, itinerary } = await req.json();
+    const { destination, startDate, endDate, description } = parsedInput;
 
-    const parsedInput = inputSchema.parse(input);
-    const parsedItinerary = itinerarySchema.parse(itinerary);
+    const response = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          content: `write me a detailed itinerary from ${startDate} till ${endDate} (these dates are in the following format "YYYY/MM/DD") for a trip to ${destination}; The intention of the trip is ${description};
 
-    const result = await db.collection("itinerary").insertOne({
-      input: parsedInput,
-      itinerary: parsedItinerary,
+          be descriptive and recommend specific areas for activities.
+          
+          always respond in the following json format, where 'time' is either morning, afternoon, or evening:
+          {
+            "title": "",
+            "days": [
+              {
+                "date": "",
+                "activities": [
+                  {
+                    "time": "",
+                    "description": "",
+                    "title": ""
+                  }
+                ]
+              }
+            ]
+          }
+          `,
+          role: "user",
+        },
+      ],
     });
 
-    return NextResponse.json({ result, status: "ok" });
+    const json = await response.json();
+
+    const rawOutput = JSON.parse(json.choices[0].message.content);
+    const parsedOutput = output.parse(rawOutput);
+
+    const { insertedId } = await db.collection("itinerary").insertOne({
+      input: parsedInput,
+      output: parsedOutput,
+      activated: false,
+    });
+
+    const result = itinerary.parse({
+      id: insertedId.toString(),
+      input: parsedInput,
+      output: parsedOutput,
+      activated: false,
+    });
+
+    return NextResponse.json({ result, ok: true });
   } catch (error) {
-    return NextResponse.json({ result: error, status: "error" });
+    console.error(error);
+    return NextResponse.json(
+      { message: "something went wrong", ok: false },
+      { status: 500 }
+    );
   }
 }
