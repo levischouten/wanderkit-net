@@ -1,13 +1,21 @@
+import Button from "@/components/Button";
 import { Itinerary as ItineraryType } from "../schema";
 import cn from "classnames";
 
 type ItineraryProps = {
-  itinerary: ItineraryType["itinerary"];
+  itinerary: ItineraryType;
+  onSave: () => void;
 };
 
 export default function Itinerary(props: ItineraryProps) {
   return (
-    <div className="flex flex-col gap-4 lg:overflow-auto lg:max-h-[calc(100vh_-_350px)]">
+    <div className="flex flex-col gap-4 lg:overflow-auto lg:max-h-[calc(100vh_-_350px)] items-start">
+      <Button
+        className="px-4 py-2  text-white rounded bg-gradient-to-br from-blue-400 to-indigo-500"
+        onPress={props.onSave}
+      >
+        Save Itinerary
+      </Button>
       {props.itinerary.days.map((day, index) => (
         <section key={index} className="flex flex-col">
           <h3 className="text-xl font-bold pb-2">

@@ -24,21 +24,19 @@ export const schema = z
   );
 
 export const itinerary = z.object({
-  itinerary: z.object({
-    title: z.string().min(1),
-    days: z.array(
-      z.object({
-        date: z.string().min(1),
-        activities: z.array(
-          z.object({
-            time: z.string().min(1),
-            description: z.string().min(1),
-            title: z.string().min(1),
-          })
-        ),
-      })
-    ),
-  }),
+  title: z.string().min(1),
+  days: z.array(
+    z.object({
+      date: z.string().min(1),
+      activities: z.array(
+        z.object({
+          time: z.string().min(1),
+          description: z.string().min(1),
+          title: z.string().min(1),
+        })
+      ),
+    })
+  ),
 });
 
 export type Schema = z.infer<typeof schema>;

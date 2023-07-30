@@ -21,12 +21,6 @@ export default function Form(props: FormProps) {
     resolver: zodResolver(schema),
   });
 
-  console.log(watch());
-
-  React.useEffect(() => {
-    console.log(watch());
-  }, [watch]);
-
   return (
     <form
       onSubmit={handleSubmit(props.onSubmit)}
