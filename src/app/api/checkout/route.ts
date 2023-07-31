@@ -1,4 +1,4 @@
-import { CURRENCY, formatAmountForStripe } from "@/app/lib/stripe";
+import { CURRENCY } from "@/lib/stripe";
 import Stripe from "stripe";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
@@ -24,20 +24,20 @@ export async function POST(req: Request) {
       mode: "payment",
       line_items: [
         {
-          quantity: 1,
           price_data: {
             currency: CURRENCY,
             product_data: {
-              name: "Custom amount donation",
+              name: "Itinerary",
             },
             unit_amount: 100,
           },
+          quantity: 1,
         },
       ],
       metadata: {
         itinerary_id: body.itineraryId,
       },
-      success_url: `${origin}/result?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${origin}/itinerary/${body.itineraryId}`,
       cancel_url: `${origin}/`,
     };
 

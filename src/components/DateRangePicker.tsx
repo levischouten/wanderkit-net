@@ -122,8 +122,6 @@ function CalendarCell({ state, date }: CalendarCellProps) {
     formattedDate,
   } = useCalendarCell({ date }, state, ref);
 
-  // The start and end date of the selected range will have
-  // an emphasized appearance.
   let isSelectionStart = state.highlightedRange
     ? isSameDay(date, state.highlightedRange.start)
     : isSelected;
@@ -131,10 +129,6 @@ function CalendarCell({ state, date }: CalendarCellProps) {
     ? isSameDay(date, state.highlightedRange.end)
     : isSelected;
 
-  // We add rounded corners on the left for the first day of the month,
-  // the first day of each week, and the start date of the selection.
-  // We add rounded corners on the right for the last day of the month,
-  // the last day of each week, and the end date of the selection.
   let { locale } = useLocale();
   let dayOfWeek = getDayOfWeek(date, locale);
   let isRoundedLeft =
@@ -229,10 +223,12 @@ export default function DateRangePicker(
   } = useDateRangePicker(props, state, ref);
 
   return (
-    <div className="relative inline-flex flex-col text-left gap-2">
-      <span {...labelProps}>{props.label}</span>
-      <div {...groupProps} ref={ref} className="flex group">
-        <div className="flex gap-2 border border-gray-400 transition-colors rounded-l p-2 relative w-full">
+    <div className="relative inline-flex flex-col text-left gap-2 ">
+      <span {...labelProps} id="label">
+        {props.label}
+      </span>
+      <div {...groupProps} id="group" ref={ref} className="flex group">
+        <div className="flex gap-2 border border-gray-400 transition-colors rounded-l p-2 relative w-full bg-white">
           <DateField {...startFieldProps} />
           <span>-</span>
           <DateField {...endFieldProps} />
@@ -240,7 +236,7 @@ export default function DateRangePicker(
         <Button
           {...buttonProps}
           type="button"
-          className="p-2 border border-l-0 rounded-r border-gray-400"
+          className="p-2 border border-l-0 rounded-r border-gray-400 bg-white"
         >
           <CalendarIcon className="w-6 h-6" />
         </Button>

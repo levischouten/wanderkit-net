@@ -43,21 +43,22 @@ export default function Itinerary(props: ItineraryProps) {
                     Secure your itinerary now and make the most of your travels!
                   </p>
                 </div>
-                <div className="flex justify-end gap-2">
-                  <Button
-                    className="px-4 py-2 border rounded border-gray-300 shadow-sm"
-                    onPress={close}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    className="px-4 py-2 bg-indigo-500 text-white rounded shadow-sm"
-                    onPress={props.onSubmit}
-                  >
-                    Save Now!
-                  </Button>
-                </div>
               </div>
+            </div>
+
+            <div className="flex justify-end gap-2 bg-gray-50 p-4 rounded-b-md">
+              <Button
+                className="px-4 py-2 border rounded border-gray-300 shadow-sm bg-white"
+                onPress={close}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="px-4 py-2 bg-indigo-500 text-white rounded shadow-sm"
+                onPress={props.onSubmit}
+              >
+                Save Now!
+              </Button>
             </div>
           </Dialog>
         )}

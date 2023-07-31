@@ -1,4 +1,6 @@
-import { client } from "@/app/lib/mongodb";
+import { sendEmail } from "@/lib/mailersend";
+import { client } from "@/lib/mongodb";
+import { Recipient } from "mailersend";
 import Cors from "micro-cors";
 import { ObjectId } from "mongodb";
 import { headers } from "next/headers";
@@ -11,12 +13,6 @@ const cors = Cors({
 });
 
 const secret = process.env.STRIPE_WEBHOOK_SECRET || "";
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
 
 export async function POST(req: Request) {
   try {
@@ -34,7 +30,7 @@ export async function POST(req: Request) {
       }
 
       await client.connect();
-      const db = client.db("tripwire");
+      const db = client.db("wonderkit");
 
       await db.collection("itinerary").updateOne(
         { _id: new ObjectId(event.data.object.metadata.itinerary_id) },
@@ -44,6 +40,15 @@ export async function POST(req: Request) {
           },
         }
       );
+
+      const email = await sendEmail(
+        "Test",
+        "<strong>some html</strong>",
+        "some text",
+        [new Recipient("MS_nV2Fmw@wanderkit.net", "Info")]
+      );
+
+      console.log({ email });
     }
 
     return NextResponse.json({ result: event, ok: true });

@@ -1,12 +1,13 @@
 {
-  "name": "tripwise-ai",
+  "name": "wanderkit-net",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "stripe:listen": "stripe listen --forward-to localhost:3000/api/webhooks/checkout"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
@@ -26,6 +27,7 @@
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
     "ics": "^3.2.0",
+    "mailersend": "^2.2.0",
     "micro": "^10.0.1",
     "micro-cors": "^0.1.1",
     "mongodb": "^5.7.0",

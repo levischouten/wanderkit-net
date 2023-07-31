@@ -8,12 +8,7 @@ import {
 import React from "react";
 import Form from "./components/Form";
 import Itinerary from "./components/Itinerary";
-import Button from "@/components/Button";
-import { getStripe } from "./lib/stripe";
-import { it } from "node:test";
-import Dialog from "@/components/Dialog";
-import { ModalTrigger } from "@/components/ModalTrigger";
-import { BookmarkIcon } from "@heroicons/react/20/solid";
+import { getStripe } from "@/lib/stripe";
 
 export default function Home() {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -67,7 +62,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col w-full pb-24 stretch gap-12">
+    <main className="flex flex-col w-full stretch gap-12">
       <section className="flex flex-col gap-2">
         <h1 className="text-4xl lg:text-5xl font-bold">
           Your Smart Travel{" "}
@@ -76,18 +71,35 @@ export default function Home() {
           </span>
         </h1>
         <p>
-          Unlock Adventure with Tripwise AI! Personalized Travel Itineraries
-          Made Easy.
+          Explore with WanderKit AI: Your Custom Travel Planner! Personalized
+          Itineraries Made Simple.
         </p>
       </section>
       <div className="flex flex-col gap-16 lg:flex-row w-full lg:items-start">
-        <section className="border-2 p-4 rounded-lg shadow-md border-indigo-500 bg-white">
+        <section className="p-6 rounded-lg shadow-md border-indigo-500 mask relative z-10 backdrop-blur-2xl after:absolute after:inset-0 after:rounded-lg after:bg-gradient-to-br after:from-indigo-500/80 after:via-indigo-500/40 after:to-indigo-500/80 after:p-[3px]">
           <Form onSubmit={handleSubmit} disabled={isLoading} />
         </section>
         {isLoading && (
-          <p className="mx-auto lg:mx-0">
-            Preparing Your Perfect Trip, This may take a moment...
-          </p>
+          <div className="flex flex-col gap-4">
+            <p className="mx-auto lg:mx-0">
+              Preparing Your Perfect Trip, This may take a moment...
+            </p>
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-2 relative">
+                <div className="w-1/2 h-5 bg-gray-100 rounded relative overflow-hidden rounded-2x before:absolute before:inset-0 before:-translate-x-full before:-skew-x-12 before:animate-[shimmer_2s_infinite] before:border-t before:border-white/10 before:bg-gradient-to-r before:from-transparent before:via-gray-200 before:to-transparent"></div>
+                <div className="w-full h-16 bg-gray-100 rounded relative overflow-hidden rounded-2x before:absolute before:inset-0 before:-translate-x-full before:-skew-x-12 before:animate-[shimmer_2s_infinite] before:border-t before:border-white/10 before:bg-gradient-to-r before:from-transparent before:via-gray-200 before:to-transparent"></div>
+              </div>
+              <div className="flex flex-col gap-2 relative">
+                <div className="w-1/2 h-5 bg-gray-100 rounded relative overflow-hidden rounded-2x before:absolute before:inset-0 before:-translate-x-full before:-skew-x-12 before:animate-[shimmer_2s_infinite] before:border-t before:border-white/10 before:bg-gradient-to-r before:from-transparent before:via-gray-200 before:to-transparent"></div>
+                <div className="w-full h-28 bg-gray-100 rounded relative overflow-hidden rounded-2x before:absolute before:inset-0 before:-translate-x-full before:-skew-x-12 before:animate-[shimmer_2s_infinite] before:border-t before:border-white/10 before:bg-gradient-to-r before:from-transparent before:via-gray-200 before:to-transparent"></div>
+              </div>
+              <div className="flex flex-col gap-2 relative">
+                <div className="w-1/2 h-5 bg-gray-100 rounded relative overflow-hidden rounded-2x before:absolute before:inset-0 before:-translate-x-full before:-skew-x-12 before:animate-[shimmer_2s_infinite] before:border-t before:border-white/10 before:bg-gradient-to-r before:from-transparent before:via-gray-200 before:to-transparent"></div>
+                <div className="w-full h-8 bg-gray-100 rounded relative overflow-hidden rounded-2x before:absolute before:inset-0 before:-translate-x-full before:-skew-x-12 before:animate-[shimmer_2s_infinite] before:border-t before:border-white/10 before:bg-gradient-to-r before:from-transparent before:via-gray-200 before:to-transparent"></div>
+                <div className="w-full h-16 bg-gray-100 rounded relative overflow-hidden rounded-2x before:absolute before:inset-0 before:-translate-x-full before:-skew-x-12 before:animate-[shimmer_2s_infinite] before:border-t before:border-white/10 before:bg-gradient-to-r before:from-transparent before:via-gray-200 before:to-transparent"></div>
+              </div>
+            </div>
+          </div>
         )}
         {itinerary && (
           <Itinerary itinerary={itinerary.output} onSubmit={handlePayment} />

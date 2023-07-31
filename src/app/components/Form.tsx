@@ -1,12 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import { input, Schema } from "../schema";
+import { useForm } from "react-hook-form";
+import { input, Input } from "../schema";
 import DateRangePicker from "@/components/DateRangePicker";
-import { getLocalTimeZone, parseDate, today } from "@internationalized/date";
+import { getLocalTimeZone, today } from "@internationalized/date";
 import React from "react";
 
 type FormProps = {
-  onSubmit: (value: Schema) => void;
+  onSubmit: (value: Input) => void;
   disabled: boolean;
 };
 
@@ -15,9 +15,8 @@ export default function Form(props: FormProps) {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
     setValue,
-  } = useForm<Schema>({
+  } = useForm<Input>({
     resolver: zodResolver(input),
   });
 
@@ -58,7 +57,7 @@ export default function Form(props: FormProps) {
         disabled={props.disabled}
       />
 
-      <p className="text-gray-400">* We support trips of up to 3 days</p>
+      <p className="text-gray-600">* We support trips of up to 3 days</p>
     </form>
   );
 }

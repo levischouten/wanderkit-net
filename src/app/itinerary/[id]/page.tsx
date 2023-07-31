@@ -1,4 +1,4 @@
-import { client } from "@/app/lib/mongodb";
+import { client } from "@/lib/mongodb";
 import { itinerary as itinerarySchema } from "../../schema";
 import { ObjectId } from "mongodb";
 import Actions from "./components/Actions";
@@ -12,7 +12,7 @@ type ItineraryProps = {
 
 export default async function Itinerary({ params }: ItineraryProps) {
   await client.connect();
-  const db = client.db("tripwire");
+  const db = client.db("wonderkit");
 
   const result = await db
     .collection("itinerary")
@@ -22,6 +22,25 @@ export default async function Itinerary({ params }: ItineraryProps) {
     ...result,
     id: result?._id.toString(),
   });
+
+  if (!itinerary.activated) {
+    return (
+      <main className="flex flex-col items-center mx-auto gap-4">
+        <h1 className="pt-12 font-medium text-xl">
+          This itinerary has not been saved
+        </h1>
+        <p className="max-w-md text-center">
+          If this is not what you expect, please contact me{" "}
+          <a
+            href="levi.schouten.werk@gmail.com"
+            className="underline underline-offset-2"
+          >
+            levi.schouten.werk@gmail.com
+          </a>
+        </p>
+      </main>
+    );
+  }
 
   return (
     <main className="flex flex-col gap-12">

@@ -1,7 +1,7 @@
 import { Configuration, OpenAIApi } from "openai-edge";
 import { NextResponse } from "next/server";
 import { output, input, itinerary } from "@/app/schema";
-import { client } from "@/app/lib/mongodb";
+import { client } from "@/lib/mongodb";
 
 const config = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     const parsedInput = input.parse(body);
 
     await client.connect();
-    const db = client.db("tripwire");
+    const db = client.db("wonderkit");
 
     const { destination, startDate, endDate, description } = parsedInput;
 

@@ -50,7 +50,7 @@ export default function Actions(props: ActionsProps) {
         if (activity.time.toLowerCase() === "afternoon") {
           const event: ics.EventAttributes = {
             start: convertDatetoDateArray(date, 12, 0),
-            duration: { hours: 5 },
+            duration: { hours: 4 },
             title: activity.title,
             description: activity.description,
             location: capitalize(props.itinerary.input.destination),
@@ -61,8 +61,8 @@ export default function Actions(props: ActionsProps) {
 
         if (activity.time.toLowerCase() === "evening") {
           const event: ics.EventAttributes = {
-            start: convertDatetoDateArray(date, 17, 0),
-            duration: { hours: 5 },
+            start: convertDatetoDateArray(date, 16, 0),
+            duration: { hours: 4 },
             title: activity.title,
             description: activity.description,
             location: capitalize(props.itinerary.input.destination),
@@ -73,7 +73,7 @@ export default function Actions(props: ActionsProps) {
 
         if (activity.time.toLowerCase() === "night") {
           const event: ics.EventAttributes = {
-            start: convertDatetoDateArray(date, 22, 0),
+            start: convertDatetoDateArray(date, 20, 0),
             duration: { hours: 4 },
             title: activity.title,
             description: activity.description,
