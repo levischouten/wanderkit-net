@@ -3,6 +3,7 @@ import { Output } from "../schema";
 import cn from "classnames";
 import { ModalTrigger } from "@/components/ModalTrigger";
 import Dialog from "@/components/Dialog";
+import { BookmarkIcon } from "@heroicons/react/20/solid";
 
 type ItineraryProps = {
   itinerary: Output;
@@ -17,32 +18,45 @@ export default function Itinerary(props: ItineraryProps) {
         className="px-4 py-2 text-white rounded bg-gradient-to-br from-blue-400 to-indigo-500"
       >
         {(close) => (
-          <Dialog title="Save Your Itinerary!">
-            <div className="flex flex-col gap-4 pt-4">
-              <p>
-                Congratulations on creating your perfect itinerary! To keep it
-                safe and accessible anytime, simply save it to our platform for
-                just $1.
-              </p>
-              <p className="font-bold">Benefits:</p>
-              <ul className="list-disc list-inside">
-                <li>Accessible from any device</li>
-                <li>Seamless calendar integration</li>
-                <li>Share easily with travel buddies</li>
-              </ul>
-              <p className="font-medium">
-                Secure your itinerary now and make the most of your travels!
-              </p>
-              <div className="flex justify-end">
-                <Button className="px-4 py-2 text-gray-600" onPress={close}>
-                  Cancel
-                </Button>
-                <Button
-                  className="px-4 py-2 bg-gradient-to-br from-blue-400 to-indigo-500 text-white rounded"
-                  onPress={props.onSubmit}
-                >
-                  Save Now!
-                </Button>
+          <Dialog>
+            <div className="flex flex-row gap-6 items-start p-6">
+              <div className="p-4 bg-green-300 rounded-full">
+                <BookmarkIcon className="w-6 h-6 text-green-600" />
+              </div>
+              <div className="flex flex-col gap-12">
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-start gap-4">
+                    <h3 className="font-bold text-xl">Save Your Itinerary!</h3>
+                  </div>
+                  <p>
+                    Congratulations on creating your perfect itinerary! To keep
+                    it safe and accessible anytime, simply save it to our
+                    platform for just $1.
+                  </p>
+                  <p className="font-bold">Benefits:</p>
+                  <ul className="list-disc list-inside">
+                    <li>Accessible from any device</li>
+                    <li>Seamless calendar integration</li>
+                    <li>Share easily with travel buddies</li>
+                  </ul>
+                  <p className="font-medium">
+                    Secure your itinerary now and make the most of your travels!
+                  </p>
+                </div>
+                <div className="flex justify-end gap-2">
+                  <Button
+                    className="px-4 py-2 border rounded border-gray-300 shadow-sm"
+                    onPress={close}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    className="px-4 py-2 bg-indigo-500 text-white rounded shadow-sm"
+                    onPress={props.onSubmit}
+                  >
+                    Save Now!
+                  </Button>
+                </div>
               </div>
             </div>
           </Dialog>

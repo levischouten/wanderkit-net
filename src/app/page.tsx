@@ -11,6 +11,9 @@ import Itinerary from "./components/Itinerary";
 import Button from "@/components/Button";
 import { getStripe } from "./lib/stripe";
 import { it } from "node:test";
+import Dialog from "@/components/Dialog";
+import { ModalTrigger } from "@/components/ModalTrigger";
+import { BookmarkIcon } from "@heroicons/react/20/solid";
 
 export default function Home() {
   const [isLoading, setIsLoading] = React.useState(false);

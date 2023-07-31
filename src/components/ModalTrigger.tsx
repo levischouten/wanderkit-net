@@ -27,7 +27,7 @@ function Modal({ state, children, ...props }: ModalProps) {
         <div
           {...modalProps}
           ref={ref}
-          className="bg-white rounded border border-gray-300 shadow-md p-12 max-w-2xl"
+          className="bg-white rounded-md border border-gray-300 shadow-md max-w-2xl"
         >
           {children}
         </div>

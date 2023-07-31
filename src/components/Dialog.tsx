@@ -14,7 +14,7 @@ export default function Dialog({ title, children, ...props }: DialogProps) {
   let { dialogProps, titleProps } = useDialog(props, ref);
 
   return (
-    <div {...dialogProps} ref={ref}>
+    <div {...dialogProps} ref={ref} className="outline-none">
       {title && (
         <h3 {...titleProps} className="mt-0 text-2xl font-bold">
           {title}
