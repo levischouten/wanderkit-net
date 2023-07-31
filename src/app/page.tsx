@@ -23,7 +23,7 @@ export default function Home() {
       return;
     }
 
-    const response = await fetch(`${process.env.URL}/api/checkout/`, {
+    const response = await fetch("api/checkout/", {
       method: "post",
       body: JSON.stringify({ itineraryId: itinerary.id }),
     });
@@ -47,7 +47,9 @@ export default function Home() {
     setIsLoading(true);
     setItinerary(null);
 
-    const response = await fetch(`${process.env.URL}/api/itinerary/`, {
+    console.log(process.env.URL);
+
+    const response = await fetch("api/itinerary/", {
       method: "post",
       body: JSON.stringify(data),
     });
@@ -76,7 +78,7 @@ export default function Home() {
         </p>
       </section>
       <div className="flex flex-col gap-16 lg:flex-row w-full lg:items-start">
-        <section className="p-6 rounded-lg shadow-md border-indigo-500 mask relative z-10 backdrop-blur-2xl after:absolute after:inset-0 after:rounded-lg after:bg-gradient-to-br after:from-indigo-500/80 after:via-indigo-500/40 after:to-indigo-500/80 after:p-[3px]">
+        <section className="p-6 rounded-lg shadow-md border-indigo-500 mask relative backdrop-blur-2xl after:absolute after:inset-0 after:rounded-lg after:bg-gradient-to-br after:from-indigo-500/80 after:via-indigo-500/40 after:to-indigo-500/80 after:p-[3px]">
           <Form onSubmit={handleSubmit} disabled={isLoading} />
         </section>
         {isLoading && (

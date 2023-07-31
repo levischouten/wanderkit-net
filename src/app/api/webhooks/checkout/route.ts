@@ -23,7 +23,9 @@ export async function POST(req: Request) {
     const event = stripe.webhooks.constructEvent(body, signature, secret);
 
     if (event.type === "checkout.session.completed") {
-      console.log(event.data.object);
+      if (!event.data.object.customer_details.email) {
+        throw new Error(`missing user email, ${event.id}`);
+      }
 
       if (!event.data.object.metadata.itinerary_id) {
         throw new Error(`missing itinerary_id on metadata, ${event.id}`);
@@ -41,14 +43,22 @@ export async function POST(req: Request) {
         }
       );
 
-      const email = await sendEmail(
-        "Test",
-        "<strong>some html</strong>",
-        "some text",
-        [new Recipient("MS_nV2Fmw@wanderkit.net", "Info")]
-      );
+      await sendEmail(
+        "Thank you for your purchase!",
+        `
+        <h1>Thank you for your purchase!</h1>
+        <p>You can view your itinerary at the following link at any time</p>
+        <a href="${process.env.URL}/itinerary/${event.data.object.metadata.itinerary_id}">${process.env.URL}/itinerary/${event.data.object.metadata.itinerary_id}</a>
 
-      console.log({ email });
+        <p>Greetings, Wanderkit</p>
+      `,
+        [
+          new Recipient(
+            event.data.object.customer_details.email,
+            "Thank you for your purchase - Wanderkit"
+          ),
+        ]
+      );
     }
 
     return NextResponse.json({ result: event, ok: true });
