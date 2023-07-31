@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import cn from "classnames";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +18,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={cn(
+          inter.className,
+          "p-6 lg:p-12 md:max-w-xl lg:max-w-7xl mx-auto"
+        )}
+      >
+        <header>
+          <h2 className="font-bold text-xl pb-12">Tripwise</h2>
+        </header>
+        {children}
+      </body>
     </html>
   );
 }

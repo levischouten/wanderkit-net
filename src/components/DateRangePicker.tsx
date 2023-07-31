@@ -53,7 +53,7 @@ function RangeCalendar(props: RangeCalendarProps<DateValue>) {
     useRangeCalendar(props, state, ref);
 
   return (
-    <div {...calendarProps} ref={ref} className="inline-block">
+    <div {...calendarProps} ref={ref} className="inline-block p-8">
       <div className="flex items-center pb-4">
         <h2 className="flex-1 font-bold text-xl ml-2">{title}</h2>
         <Button {...prevButtonProps}>
@@ -76,7 +76,6 @@ function CalendarGrid({ state, ...props }: CalendarGridProps) {
   let { locale } = useLocale();
   let { gridProps, headerProps, weekDays } = useCalendarGrid(props, state);
 
-  // Get the number of weeks in the month so we can render the proper number of rows.
   let weeksInMonth = getWeeksInMonth(state.visibleRange.start, locale);
 
   return (

@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       await client.connect();
       const db = client.db("tripwire");
 
-      const result = await db.collection("itinerary").updateOne(
+      await db.collection("itinerary").updateOne(
         { _id: new ObjectId(event.data.object.metadata.itinerary_id) },
         {
           $set: {

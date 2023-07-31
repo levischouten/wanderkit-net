@@ -64,10 +64,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col w-full p-6 lg:p-12 md:max-w-xl lg:max-w-7xl mx-auto pb-24 stretch gap-12 ">
-      <header>
-        <h2 className="font-bold text-xl">Tripwise</h2>
-      </header>
+    <main className="flex flex-col w-full pb-24 stretch gap-12">
       <section className="flex flex-col gap-2">
         <h1 className="text-4xl lg:text-5xl font-bold">
           Your Smart Travel{" "}

@@ -1,18 +1,29 @@
+import React from "react";
 import { AriaButtonProps, useButton } from "react-aria";
-import { useRef } from "react";
+import { RefObject, useRef } from "react";
+import { mergeRefs } from "@react-aria/utils";
 
-type ButtonProps = {
+export type ButtonProps = {
   className?: string;
 } & AriaButtonProps;
 
-export default function Button(props: ButtonProps) {
+const Button = React.forwardRef(function Button(
+  props: ButtonProps,
+  forwardedRef: React.ForwardedRef<HTMLButtonElement>
+) {
   const ref = useRef<HTMLButtonElement>(null);
   const { buttonProps } = useButton(props, ref);
   const { children } = props;
 
   return (
-    <button {...props} {...buttonProps} ref={ref}>
+    <button
+      {...buttonProps}
+      className={props.className}
+      ref={mergeRefs(ref, forwardedRef)}
+    >
       {children}
     </button>
   );
-}
+});
+
+export default Button;

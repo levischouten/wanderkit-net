@@ -26,7 +26,7 @@ export async function POST(req: Request) {
 
           be descriptive and recommend specific areas for activities.
           
-          always respond in the following json format, where 'time' is either morning, afternoon, or evening:
+          always respond in the following json format, where 'time' is either 'morning', 'afternoon', 'evening' or 'night':
           {
             "title": "",
             "days": [
