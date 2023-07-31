@@ -23,7 +23,7 @@ export default function Home() {
       return;
     }
 
-    const response = await fetch("http://localhost:3000/api/checkout/", {
+    const response = await fetch(`${process.env.URL}/api/checkout/`, {
       method: "post",
       body: JSON.stringify({ itineraryId: itinerary.id }),
     });
@@ -47,7 +47,7 @@ export default function Home() {
     setIsLoading(true);
     setItinerary(null);
 
-    const response = await fetch("http://localhost:3000/api/itinerary/", {
+    const response = await fetch(`${process.env.URL}/api/itinerary/`, {
       method: "post",
       body: JSON.stringify(data),
     });
