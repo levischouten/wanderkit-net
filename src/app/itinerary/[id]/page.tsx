@@ -12,7 +12,7 @@ type ItineraryProps = {
 
 export default async function Itinerary({ params }: ItineraryProps) {
   await client.connect();
-  const db = client.db("wonderkit");
+  const db = client.db("wanderkit");
 
   const result = await db
     .collection("itinerary")
