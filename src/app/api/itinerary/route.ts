@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     const parsedInput = input.parse(body);
 
     await client.connect();
-    const db = client.db("wonderkit");
+    const db = client.db("wanderkit");
 
     const { destination, startDate, endDate, description } = parsedInput;
 
@@ -22,11 +22,11 @@ export async function POST(req: Request) {
       model: "gpt-3.5-turbo",
       messages: [
         {
-          content: `write me a detailed itinerary from ${startDate} till ${endDate} (these dates are in the following format "YYYY/MM/DD") for a trip to ${destination}; The intention of the trip is ${description};
+          content: `write me an itinerary from ${startDate} till ${endDate} (these dates are in the following format "YYYY/MM/DD") for a trip to ${destination}; The intention of the trip is ${description};
 
-          be descriptive and recommend specific areas for activities.
-          
-          always respond in the following json format, where 'time' is either 'morning', 'afternoon', 'evening' or 'night':
+          be concise and specific specific areas and locations. They always arrive in the morning and leave the morning after the last day, unless described other wise in the intention of the trip. Do not mention the arrival and departure in the response.
+
+          always respond in the following json format, where 'time' is either 'morning', 'afternoon', 'evening' or 'night', also in that order:
           {
             "title": "",
             "days": [
