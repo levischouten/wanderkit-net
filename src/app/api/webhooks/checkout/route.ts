@@ -20,6 +20,8 @@ export async function POST(req: Request) {
 
     const signature = headers().get("stripe-signature");
 
+    console.log({ signature, body, stripe });
+
     const event = stripe.webhooks.constructEvent(body, signature, secret);
 
     if (event.type === "checkout.session.completed") {
@@ -65,7 +67,11 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { message: "something went wrong", error, ok: false },
+      {
+        message: "something went wrong",
+        error: { error },
+        ok: false,
+      },
       { status: 500 }
     );
   }
