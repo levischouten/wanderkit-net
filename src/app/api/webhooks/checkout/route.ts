@@ -15,13 +15,10 @@ const cors = Cors({
 const secret = process.env.STRIPE_WEBHOOK_SECRET || "";
 
 export async function POST(req: Request) {
-  let body = null;
-  let signature = null;
-
   try {
-    body = await req.text();
+    const body = await req.text();
 
-    signature = headers().get("stripe-signature");
+    const signature = headers().get("stripe-signature");
 
     const event = stripe.webhooks.constructEvent(body, signature, secret);
 
@@ -70,7 +67,6 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         message: "something went wrong",
-        error: { error, signature, body },
         ok: false,
       },
       { status: 500 }

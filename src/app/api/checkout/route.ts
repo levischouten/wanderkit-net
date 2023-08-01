@@ -15,9 +15,6 @@ export async function POST(req: Request) {
       throw new Error("Missing itinerary_id");
     }
 
-    const headersList = headers();
-    const origin = headersList.get("origin");
-
     const params: Stripe.Checkout.SessionCreateParams = {
       submit_type: "pay",
       payment_method_types: ["card"],
@@ -37,8 +34,8 @@ export async function POST(req: Request) {
       metadata: {
         itinerary_id: body.itineraryId,
       },
-      success_url: `${origin}/itinerary/${body.itineraryId}`,
-      cancel_url: `${origin}/`,
+      success_url: `${process.env.URL}/success?itineraryId=${body.itineraryId}`,
+      cancel_url: `${process.env.URL}/`,
     };
 
     const checkoutSession: Stripe.Checkout.Session =
