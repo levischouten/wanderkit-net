@@ -57,7 +57,7 @@ export default function Form(props: FormProps) {
         disabled={props.disabled}
       />
 
-      <p className="text-gray-600">* We support trips of up to 3 days</p>
+      <p className="text-gray-600">* We support trips of up to 5 days</p>
     </form>
   );
 }

@@ -14,7 +14,7 @@ export default function Itinerary(props: ItineraryProps) {
   return (
     <div className="flex flex-col gap-4 items-start">
       <ModalTrigger
-        label="Save Itinerary"
+        label="What's next?"
         className="px-4 py-2 text-white rounded bg-gradient-to-br from-blue-400 to-indigo-500"
       >
         {(close) => (

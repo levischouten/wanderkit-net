@@ -16,9 +16,9 @@ export const input = z
   .refine(
     ({ endDate, startDate }) =>
       new Date(endDate).getTime() - new Date(startDate).getTime() <=
-      DAY_IN_MS * 3,
+      DAY_IN_MS * 4,
     {
-      message: "Range selected can not be longer than 3 days",
+      message: "Range selected can not be longer than 5 days",
       path: ["endDate"],
     }
   );
