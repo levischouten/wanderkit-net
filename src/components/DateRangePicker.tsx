@@ -173,8 +173,10 @@ function DateSegment(props: DateSegmentProps) {
     <div
       {...segmentProps}
       ref={ref}
-      className={cn("text-gray-400", {
-        "text-black": props.segment.isEditable && !props.segment.isPlaceholder,
+      className={cn({
+        "text-black": props.segment.isEditable || !props.segment.isPlaceholder,
+        "text-gray-400":
+          props.segment.isPlaceholder || !props.segment.isEditable,
       })}
     >
       {props.segment.text}
@@ -196,7 +198,7 @@ function DateField(props: AriaDateFieldProps<DateValue>) {
   return (
     <div>
       <span {...labelProps}>{props.label}</span>
-      <div {...fieldProps} ref={ref} className="flex gap-1">
+      <div {...fieldProps} ref={ref} className="flex gap-0.5">
         {state.segments.map((segment, i) => (
           <DateSegment key={i} segment={segment} state={state} />
         ))}

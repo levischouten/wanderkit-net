@@ -1,16 +1,12 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Open_Sans } from "next/font/google";
 import cn from "classnames";
-import Link from "next/link";
 import Script from "next/script";
 import GlobalToastRegion from "@/components/Toast";
-import MenuButton from "@/components/MenuButton";
-import { Bars3Icon } from "@heroicons/react/20/solid";
-import { Item } from "react-stately";
 import Header from "./components/Header";
 
-const inter = Inter({ subsets: ["latin"] });
+const openSans = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Wanderkit - Unlock Your Perfect Trip",
@@ -37,7 +33,7 @@ export default function RootLayout({
       </Script>
       <body
         className={cn(
-          inter.className,
+          openSans.className,
           "p-6 lg:p-12 md:max-w-xl lg:max-w-7xl mx-auto"
         )}
       >

@@ -4,6 +4,8 @@ import { input, Input } from "../schema";
 import DateRangePicker from "@/components/DateRangePicker";
 import { getLocalTimeZone, today } from "@internationalized/date";
 import React from "react";
+import Button from "@/components/Button";
+import { ArrowRightIcon, ArrowSmallRightIcon } from "@heroicons/react/20/solid";
 
 type FormProps = {
   onSubmit: (value: Input) => void;
@@ -51,11 +53,13 @@ export default function Form(props: FormProps) {
         errorMessage={errors.startDate?.message || errors.endDate?.message}
       />
 
-      <input
+      <Button
         type="submit"
-        className=" bg-indigo-500 text-white rounded p-2"
-        disabled={props.disabled}
-      />
+        className=" bg-indigo-500 text-white rounded p-2 flex gap-2 items-center justify-center"
+        isDisabled={props.disabled}
+      >
+        Submit <ArrowRightIcon className="w-5 h-5" />
+      </Button>
 
       <p className="text-gray-600">* We support trips of up to 5 days</p>
     </form>
