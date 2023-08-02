@@ -24,9 +24,9 @@ export async function POST(req: Request) {
         {
           content: `write me an itinerary from ${startDate} till ${endDate} (these dates are in the following format "YYYY/MM/DD") for a trip to ${destination}; The intention of the trip is ${description};
 
-          be concise and specific specific areas and locations. They always arrive in the morning and leave the morning after the last day, unless described other wise in the intention of the trip. Do not mention the arrival and departure in the response.
+          be concise and specific specific areas and locations. They always arrive in the morning of the first day and the departure should not be mentioned.
 
-          always respond in the following json format, where 'time' is either 'morning', 'afternoon', 'evening' or 'night', also in that order:
+          always respond in the following json format, where 'time' can be 'morning', 'afternoon', 'evening' or 'night'. every day should have at least a morning, an afternoon and a night.
           {
             "title": "",
             "days": [

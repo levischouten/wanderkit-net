@@ -37,7 +37,7 @@ export default function Form(props: FormProps) {
         {...register("description")}
         rows={4}
         className="border border-gray-400 p-2 rounded"
-        placeholder="Romantic getaway with the misses.."
+        placeholder="Family trip with lots of nice dinners"
       />
       <p className="text-red-500">{errors.description?.message}</p>
 

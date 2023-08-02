@@ -63,7 +63,7 @@ export default function Itinerary(props: ItineraryProps) {
           </Dialog>
         )}
       </ModalTrigger>
-      <div className="flex flex-col gap-4 items-start lg:overflow-auto lg:max-h-[calc(100vh_-_375px)]">
+      <div className="flex flex-col gap-4 items-start lg:overflow-auto lg:max-h-[calc(100vh_-_375px)] pr-6">
         {props.itinerary.days.map((day, index) => (
           <section key={index} className="flex flex-col">
             <h3 className="text-xl font-bold pb-2">
