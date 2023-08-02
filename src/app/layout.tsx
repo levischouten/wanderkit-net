@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import cn from "classnames";
 import Link from "next/link";
 import Script from "next/script";
+import GlobalToastRegion from "@/components/Toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,6 +43,7 @@ export default function RootLayout({
           </h2>
         </header>
         {children}
+        <GlobalToastRegion />
       </body>
     </html>
   );

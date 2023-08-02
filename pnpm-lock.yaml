@@ -14,9 +14,15 @@ dependencies:
   '@internationalized/date':
     specifier: ^3.3.0
     version: 3.3.0
+  '@react-aria/toast':
+    specifier: 3.0.0-beta.2
+    version: 3.0.0-beta.2(react@18.2.0)
   '@react-aria/utils':
     specifier: ^3.18.0
     version: 3.18.0(react@18.2.0)
+  '@react-stately/toast':
+    specifier: 3.0.0-beta.1
+    version: 3.0.0-beta.1(react@18.2.0)
   '@stripe/stripe-js':
     specifier: ^1.54.1
     version: 1.54.1
@@ -702,6 +708,19 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@react-aria/landmark@3.0.0-beta.2(react@18.2.0):
+    resolution: {integrity: sha512-PzRx/KwzxUUVk9bGbTNWHCtkzzGfnUL8yozd/sJjnCofa7BPrt71EnvB4W53W0MDD3hod8JDwk3TlzNyXPi/ww==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
+    dependencies:
+      '@react-aria/focus': 3.13.0(react@18.2.0)
+      '@react-aria/utils': 3.18.0(react@18.2.0)
+      '@react-types/shared': 3.18.1(react@18.2.0)
+      '@swc/helpers': 0.5.1
+      react: 18.2.0
+      use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: false
+
   /@react-aria/link@3.5.2(react@18.2.0):
     resolution: {integrity: sha512-CCFP11Uietro6TUZpWBoq3Ql/6qss/ODC5XM6oNxckj72IHruFIj8V7Y0tL5x0aE6h38hlKcDf8NCxkQqz2edg==}
     peerDependencies:
@@ -1050,6 +1069,22 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@react-aria/toast@3.0.0-beta.2(react@18.2.0):
+    resolution: {integrity: sha512-PW+3ueOfMqzHlAb8ixocxBprRiLdz+xH7YEIn1E+iRregkdfcjfqchzU2PN3UQm7Othk1b3Bt9LemCOM66YRcA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
+    dependencies:
+      '@react-aria/i18n': 3.8.0(react@18.2.0)
+      '@react-aria/interactions': 3.16.0(react@18.2.0)
+      '@react-aria/landmark': 3.0.0-beta.2(react@18.2.0)
+      '@react-aria/utils': 3.18.0(react@18.2.0)
+      '@react-stately/toast': 3.0.0-beta.1(react@18.2.0)
+      '@react-types/button': 3.7.3(react@18.2.0)
+      '@react-types/shared': 3.18.1(react@18.2.0)
+      '@swc/helpers': 0.5.1
+      react: 18.2.0
+    dev: false
+
   /@react-aria/toggle@3.6.2(react@18.2.0):
     resolution: {integrity: sha512-bRz/ybajeLEsJLt1ARRL7CtWs6bwvkNLWy/wpJnH2TJ3+lMpH+EKbWBVJoAP7wQ5jIVVpxKJLhpf6w6x8ZLtdw==}
     peerDependencies:
@@ -1366,6 +1401,16 @@ packages:
       '@react-types/tabs': 3.3.0(react@18.2.0)
       '@swc/helpers': 0.5.1
       react: 18.2.0
+    dev: false
+
+  /@react-stately/toast@3.0.0-beta.1(react@18.2.0):
+    resolution: {integrity: sha512-NeWdLXpHfXu8UXjmn+6iZv39Xvan/D0uNWzIyCxkDOeNNOHt1N4kSwdvQ56ScQ3f7KBVPqKz32t7K466Zpa8Jg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
+    dependencies:
+      '@swc/helpers': 0.5.1
+      react: 18.2.0
+      use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
   /@react-stately/toggle@3.6.0(react@18.2.0):

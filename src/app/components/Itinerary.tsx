@@ -12,7 +12,7 @@ type ItineraryProps = {
 
 export default function Itinerary(props: ItineraryProps) {
   return (
-    <div className="flex flex-col gap-4 items-start">
+    <section className="flex flex-col gap-4 items-start flex-1">
       <ModalTrigger
         label="What's next?"
         className="px-4 py-2 text-white rounded bg-gradient-to-br from-blue-400 to-indigo-500"
@@ -92,6 +92,6 @@ export default function Itinerary(props: ItineraryProps) {
           </section>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

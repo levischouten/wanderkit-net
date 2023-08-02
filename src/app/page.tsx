@@ -12,6 +12,22 @@ import { getStripe } from "@/lib/stripe";
 import Image from "next/image";
 import ProgressBar from "@/components/ProgressBar";
 import cn from "classnames";
+import { toasts } from "@/components/Toast";
+import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
+
+function addErrorToast(title: string, description: string) {
+  toasts.add(
+    <div className="flex gap-4 items-center">
+      <div className="rounded-full bg-red-200 p-2">
+        <ExclamationTriangleIcon className="text-red-400 h-6 w-6" />
+      </div>
+      <div className="flex flex-col">
+        <h3 className="">{title}</h3>
+        <p className="text-gray-500">{description}</p>
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -23,55 +39,68 @@ export default function Home() {
   };
 
   const handlePayment = async () => {
-    if (!itinerary) {
-      return;
+    try {
+      if (!itinerary) {
+        throw new Error("Something went wrong");
+      }
+
+      const response = await fetch("api/checkout/", {
+        method: "post",
+        body: JSON.stringify({ itineraryId: itinerary.id }),
+      });
+
+      const json = await response.json();
+
+      if (!json.ok) {
+        throw new Error("Something went wrong");
+      }
+
+      const stripe = await getStripe();
+
+      if (!stripe) {
+        throw new Error("Something went wrong");
+      }
+
+      await stripe.redirectToCheckout({ sessionId: json.result.id });
+    } catch (error) {
+      addErrorToast("Failed to start stransaction", "Please try again.");
     }
-
-    const response = await fetch("api/checkout/", {
-      method: "post",
-      body: JSON.stringify({ itineraryId: itinerary.id }),
-    });
-
-    const json = await response.json();
-
-    if (!json.ok) {
-      return;
-    }
-
-    const stripe = await getStripe();
-
-    if (!stripe) {
-      return;
-    }
-
-    await stripe.redirectToCheckout({ sessionId: json.result.id });
   };
 
   const getItinerary = async (data: Input) => {
     setIsLoading(true);
     setItinerary(null);
 
+    // progress bar simulation
     const interval = setInterval(() => {
       setProgress((p) => {
         if (p < 30) {
           return p + 1;
         }
-        return 0;
+        return 30;
       });
     }, 1000);
 
-    const response = await fetch("api/itinerary/", {
-      method: "post",
-      body: JSON.stringify(data),
-    });
+    try {
+      const response = await fetch("api/itinerary/", {
+        method: "post",
+        body: JSON.stringify(data),
+      });
 
-    const json = await response.json();
+      const json = await response.json();
 
-    if (json.ok) {
-      setItinerary(itinerarySchema.parse(json.result));
+      if (!json.ok) {
+        throw new Error("Something went wrong");
+      }
+
+      if (json.ok) {
+        setItinerary(itinerarySchema.parse(json.result));
+      }
+    } catch (error) {
+      addErrorToast("Failed to create itinerary", "Please try again.");
     }
 
-    setProgress(31);
+    setProgress(0);
     clearInterval(interval);
     setIsLoading(false);
   };
@@ -103,9 +132,12 @@ export default function Home() {
         </section>
 
         <section
-          className={cn("w-full h-full flex flex-col gap-6", {
-            hidden: itinerary,
-          })}
+          className={cn(
+            "w-full h-full flex flex-col gap-6 flex-1 items-center",
+            {
+              hidden: itinerary,
+            }
+          )}
         >
           <Image
             src="/travelers.svg"
@@ -116,7 +148,7 @@ export default function Home() {
           />
           {isLoading && (
             <div className="flex flex-col gap-2">
-              <div className="md:w-2/3">
+              <div className="">
                 <ProgressBar value={progress} maxValue={31} />
               </div>
               <p className="mx-auto lg:mx-0 font-medium">
