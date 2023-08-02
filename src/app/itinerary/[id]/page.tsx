@@ -46,7 +46,7 @@ export default async function Itinerary({ params }: ItineraryProps) {
     <main className="flex flex-col gap-12">
       <div className="flex flex-col gap-2">
         <h1 className="text-4xl lg:text-5xl font-bold">
-          <span className="text-transparent bg-clip-text bg-gradient-to-b from-blue-400 to-indigo-500">
+          <span className="text-transparent bg-clip-text bg-gradient-to-b from-blue-500 to-indigo-500">
             Thank You{" "}
           </span>
           for your Purchase!

@@ -5,6 +5,10 @@ import cn from "classnames";
 import Link from "next/link";
 import Script from "next/script";
 import GlobalToastRegion from "@/components/Toast";
+import MenuButton from "@/components/MenuButton";
+import { Bars3Icon } from "@heroicons/react/20/solid";
+import { Item } from "react-stately";
+import Header from "./components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,11 +41,7 @@ export default function RootLayout({
           "p-6 lg:p-12 md:max-w-xl lg:max-w-7xl mx-auto"
         )}
       >
-        <header>
-          <h2 className="font-bold text-xl pb-12">
-            <Link href="/">Wanderkit</Link>
-          </h2>
-        </header>
+        <Header />
         {children}
         <GlobalToastRegion />
       </body>

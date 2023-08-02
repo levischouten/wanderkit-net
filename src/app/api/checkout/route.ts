@@ -1,6 +1,5 @@
 import { CURRENCY } from "@/lib/stripe";
 import Stripe from "stripe";
-import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {

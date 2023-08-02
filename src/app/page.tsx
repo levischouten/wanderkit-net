@@ -110,7 +110,7 @@ export default function Home() {
       <section className="flex flex-col gap-2">
         <h1 className="text-4xl lg:text-5xl font-bold">
           Your Smart Travel{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-b from-blue-400 to-indigo-500">
+          <span className="text-transparent bg-clip-text bg-gradient-to-b from-blue-500 to-indigo-500">
             Itinerary Generator
           </span>
         </h1>

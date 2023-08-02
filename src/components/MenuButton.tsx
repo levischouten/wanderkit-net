@@ -1,3 +1,5 @@
+"use client";
+
 import type { MenuTriggerProps, Node, TreeState } from "react-stately";
 import { AriaMenuProps, useMenu, useMenuTrigger } from "react-aria";
 import { useMenuTriggerState, useTreeState } from "react-stately";
@@ -11,7 +13,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 type MenuButtonProps<T> = AriaMenuProps<T> &
   MenuTriggerProps &
   ButtonProps & {
-    label?: string;
+    label?: React.ReactNode;
     icon?: React.ReactNode;
   };
 
@@ -27,7 +29,7 @@ export default function MenuButton<T extends object>(
     <>
       <Button {...menuTriggerProps} ref={ref} className={props.className}>
         {props.label}
-        <span aria-hidden="true" className="pl-2">
+        <span aria-hidden="true">
           {props.icon ? props.icon : <ChevronDownIcon className="w-5 h-5" />}
         </span>
       </Button>
