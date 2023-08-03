@@ -21,16 +21,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Script src="https://www.googletagmanager.com/gtag/js?id=G-NHG3FG5J1Z" />
-      <Script id="google-analytics">
-        {`
+      {process.env.NODE_ENV !== "development" && (
+        <>
+          <Script src="https://www.googletagmanager.com/gtag/js?id=G-NHG3FG5J1Z" />
+          <Script id="google-analytics">
+            {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
  
           gtag('config', 'G-NHG3FG5J1Z');
         `}
-      </Script>
+          </Script>
+        </>
+      )}
+
       <body
         className={cn(
           openSans.className,

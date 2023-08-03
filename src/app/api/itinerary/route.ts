@@ -24,7 +24,7 @@ export async function POST(req: Request) {
       model: "gpt-3.5-turbo",
       messages: [
         {
-          content: `write me an itinerary from ${startDate} till ${endDate} (these dates are in the following format "YYYY/MM/DD") for a trip to ${destination}; The intention of the trip is ${description};
+          content: `You are a travel planner that will generate itineraries.
 
           name specific areas, locations, shops and restaurants. They always arrive in the morning of the first day and the departure should not be mentioned.
 
@@ -45,6 +45,10 @@ export async function POST(req: Request) {
             ]
           }
           `,
+          role: "system",
+        },
+        {
+          content: `write me an itinerary from ${startDate} till ${endDate} (these dates are in the following format "YYYY/MM/DD") for a trip to ${destination}; The intention of the trip is ${description};`,
           role: "user",
         },
       ],
