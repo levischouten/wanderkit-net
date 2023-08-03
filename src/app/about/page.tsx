@@ -35,6 +35,7 @@ export default function Page() {
           alt="traveling"
           width={500}
           height={500}
+          priority
         ></Image>
       </section>
     </main>

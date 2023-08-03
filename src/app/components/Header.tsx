@@ -6,7 +6,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Item } from "react-stately";
 
-const items = [{ href: "/about", label: "About us" }];
+const items = [
+  { href: "/blogs", label: "Blog" },
+  { href: "/about", label: "About us" },
+];
 
 export default function Header() {
   const router = useRouter();

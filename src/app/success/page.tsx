@@ -37,7 +37,13 @@ export default function Redirect({ searchParams }: RedirectProps) {
         </div>
       </div>
       <div className="flex justify-end">
-        <Image src="/success.svg" alt="success" width={400} height={400} />
+        <Image
+          src="/success.svg"
+          alt="success"
+          width={400}
+          height={400}
+          priority
+        />
       </div>
     </main>
   );

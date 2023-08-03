@@ -143,8 +143,9 @@ export default function Home() {
             src="/travelers.svg"
             alt="travelers"
             width={500}
-            height={0}
-            className="mt-6"
+            height={500}
+            className="mt-6 w-auto h-auto"
+            priority
           />
           {isLoading && (
             <div className="flex flex-col gap-2">
