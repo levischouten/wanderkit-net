@@ -62,7 +62,6 @@ export const createItineraries = z.object({
 
 export const itineraries = z.object({
   id: z.string().min(1),
-  inputId: z.string().min(1),
   title: z.string().min(1),
   destination: z.string().min(1),
   description: z.string().min(1),
