@@ -1,5 +1,5 @@
-import { client } from "@/lib/mongodb";
-import { itinerary as itinerarySchema } from "../../schema";
+import { db } from "@/lib/mongodb";
+import { itineraries as itinerarySchema } from "../../schema";
 import { ObjectId } from "mongodb";
 import Actions from "./components/Actions";
 import cn from "classnames";
@@ -11,9 +11,6 @@ type ItineraryProps = {
 };
 
 export default async function Itinerary({ params }: ItineraryProps) {
-  await client.connect();
-  const db = client.db("wanderkit");
-
   const result = await db
     .collection("itinerary")
     .findOne({ _id: new ObjectId(params.id) });
@@ -61,7 +58,7 @@ export default async function Itinerary({ params }: ItineraryProps) {
           <Actions itinerary={itinerary} />
         </div>
         <div className="flex flex-col gap-4 items-start lg:overflow-auto lg:max-h-[calc(100vh_-_375px)]">
-          {itinerary.output.days.map((day, index) => (
+          {itinerary.days.map((day, index) => (
             <section key={index} className="flex flex-col">
               <h3 className="text-xl font-bold pb-2">
                 Day {index + 1}{" "}

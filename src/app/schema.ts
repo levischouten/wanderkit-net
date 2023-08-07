@@ -39,13 +39,50 @@ export const output = z.object({
   ),
 });
 
-export const itinerary = z.object({
+export const createItineraries = z.object({
+  title: z.string().min(1),
+  destination: z.string().min(1),
+  description: z.string().min(1),
+  startDate: z.string().min(1),
+  endDate: z.string().min(1),
+  days: z.array(
+    z.object({
+      date: z.string().min(1),
+      activities: z.array(
+        z.object({
+          time: z.string().min(1),
+          description: z.string().min(1),
+          title: z.string().min(1),
+        })
+      ),
+    })
+  ),
+  activated: z.boolean().default(false),
+});
+
+export const itineraries = z.object({
   id: z.string().min(1),
-  input,
-  output,
+  inputId: z.string().min(1),
+  title: z.string().min(1),
+  destination: z.string().min(1),
+  description: z.string().min(1),
+  startDate: z.string().min(1),
+  endDate: z.string().min(1),
+  days: z.array(
+    z.object({
+      date: z.string().min(1),
+      activities: z.array(
+        z.object({
+          time: z.string().min(1),
+          description: z.string().min(1),
+          title: z.string().min(1),
+        })
+      ),
+    })
+  ),
   activated: z.boolean().default(false),
 });
 
 export type Input = z.infer<typeof input>;
 export type Output = z.infer<typeof output>;
-export type Itinerary = z.infer<typeof itinerary>;
+export type Itineraries = z.infer<typeof itineraries>;

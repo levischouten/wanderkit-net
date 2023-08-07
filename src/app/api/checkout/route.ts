@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    if (!body.itineraryId) {
+    if (!body.inputId) {
       throw new Error("Missing itinerary_id");
     }
 
@@ -31,9 +31,9 @@ export async function POST(req: Request) {
         },
       ],
       metadata: {
-        itinerary_id: body.itineraryId,
+        input_id: body.inputId,
       },
-      success_url: `${process.env.URL}/success?itineraryId=${body.itineraryId}`,
+      success_url: `${process.env.URL}/success?id=${body.inputId}`,
       cancel_url: `${process.env.URL}/`,
     };
 

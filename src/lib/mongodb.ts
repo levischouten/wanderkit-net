@@ -1,5 +1,3 @@
-// const { MongoClient, ServerApiVersion } = require("mongodb");
-
 import { MongoClient, ServerApiVersion } from "mongodb";
 
 const uri = process.env.MONGODB_URI || "";
@@ -11,3 +9,5 @@ export const client = new MongoClient(uri, {
     deprecationErrors: true,
   },
 });
+
+export const db = client.db("wanderkit");

@@ -1,16 +1,15 @@
 import { sendEmail } from "@/lib/mailersend";
-import { client } from "@/lib/mongodb";
+import { db } from "@/lib/mongodb";
 import { Recipient } from "mailersend";
 import Cors from "micro-cors";
-import { ObjectId } from "mongodb";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE);
 
-const cors = Cors({
-  allowMethods: ["POST", "HEAD"],
-});
+// const cors = Cors({
+//   allowMethods: ["POST", "HEAD"],
+// });
 
 const secret = process.env.STRIPE_WEBHOOK_SECRET || "";
 
@@ -27,15 +26,12 @@ export async function POST(req: Request) {
         throw new Error(`missing user email, ${event.id}`);
       }
 
-      if (!event.data.object.metadata.itinerary_id) {
-        throw new Error(`missing itinerary_id on metadata, ${event.id}`);
+      if (!event.data.object.metadata.input_id) {
+        throw new Error(`missing input_id on metadata, ${event.id}`);
       }
 
-      await client.connect();
-      const db = client.db("wanderkit");
-
       await db.collection("itinerary").updateOne(
-        { _id: new ObjectId(event.data.object.metadata.itinerary_id) },
+        { inputId: event.data.object.metadata.input_id },
         {
           $set: {
             activated: true,
@@ -48,7 +44,7 @@ export async function POST(req: Request) {
         `
         <h1>Thank you for your purchase!</h1>
         <p>You can view your itinerary at the following link at any time</p>
-        <a href="${process.env.URL}/itinerary/${event.data.object.metadata.itinerary_id}">${process.env.URL}/itinerary/${event.data.object.metadata.itinerary_id}</a>
+        <a href="${process.env.URL}/itinerary/${event.data.object.metadata.input_id}">${process.env.URL}/itinerary/${event.data.object.metadata.input_id}</a>
 
         <p>Greetings, Wanderkit</p>
       `,

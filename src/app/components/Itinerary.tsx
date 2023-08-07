@@ -55,6 +55,7 @@ export default function Itinerary(props: ItineraryProps) {
               </Button>
               <Button
                 className="px-4 py-2 bg-indigo-500 text-white rounded shadow-sm"
+                isDisabled={true} // functionality not working, disabled for now.
                 onPress={props.onSubmit}
               >
                 Save Now!

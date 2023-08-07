@@ -1,6 +1,6 @@
 "use client";
 
-import { Itinerary } from "@/app/schema";
+import { Itineraries } from "@/app/schema";
 import Button from "@/components/Button";
 import { CalendarIcon } from "@heroicons/react/20/solid";
 import ics, { DateArray, createEvents } from "ics";
@@ -24,14 +24,14 @@ function capitalize(input: string) {
 }
 
 type ActionsProps = {
-  itinerary: Itinerary;
+  itinerary: Itineraries;
 };
 
 export default function Actions(props: ActionsProps) {
   const handlePress = async () => {
     const events: ics.EventAttributes[] = [];
 
-    props.itinerary.output.days.map((day) => {
+    props.itinerary.days.map((day) => {
       const date = new Date(day.date);
 
       day.activities.map((activity) => {
@@ -41,7 +41,7 @@ export default function Actions(props: ActionsProps) {
             duration: { hours: 3 },
             title: activity.title,
             description: activity.description,
-            location: capitalize(props.itinerary.input.destination),
+            location: capitalize(props.itinerary.destination),
           };
 
           events.push(event);
@@ -53,7 +53,7 @@ export default function Actions(props: ActionsProps) {
             duration: { hours: 4 },
             title: activity.title,
             description: activity.description,
-            location: capitalize(props.itinerary.input.destination),
+            location: capitalize(props.itinerary.destination),
           };
 
           events.push(event);
@@ -65,7 +65,7 @@ export default function Actions(props: ActionsProps) {
             duration: { hours: 4 },
             title: activity.title,
             description: activity.description,
-            location: capitalize(props.itinerary.input.destination),
+            location: capitalize(props.itinerary.destination),
           };
 
           events.push(event);
@@ -77,7 +77,7 @@ export default function Actions(props: ActionsProps) {
             duration: { hours: 4 },
             title: activity.title,
             description: activity.description,
-            location: capitalize(props.itinerary.input.destination),
+            location: capitalize(props.itinerary.destination),
           };
 
           events.push(event);
@@ -86,7 +86,7 @@ export default function Actions(props: ActionsProps) {
     });
 
     const filename =
-      props.itinerary.output.title.toLowerCase().replaceAll(" ", "_") + ".ics";
+      props.itinerary.title.toLowerCase().replaceAll(" ", "_") + ".ics";
 
     const file: File = await new Promise((resolve, reject) => {
       createEvents(events, (error, value) => {

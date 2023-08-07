@@ -70,7 +70,7 @@ function ToastRegion<T extends React.ReactNode>({
     <div
       {...regionProps}
       ref={ref}
-      className="fixed bottom-2 right-2 left-2 sm:left-auto sm:bottom-4 sm:right-4 flex flex-col gap-2"
+      className="fixed bottom-2 right-2 left-2 sm:left-auto sm:bottom-4 sm:right-4 flex flex-col gap-2 w-96"
     >
       {state.visibleToasts.map((toast) => (
         <Toast key={toast.key} toast={toast} state={state} />

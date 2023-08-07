@@ -1,11 +1,7 @@
 "use client";
 
-import {
-  Itinerary as ItineraryType,
-  Input,
-  itinerary as itinerarySchema,
-} from "./schema";
-import React from "react";
+import { Input, output, Output } from "./schema";
+import React, { useMemo } from "react";
 import Form from "./components/Form";
 import Itinerary from "./components/Itinerary";
 import { getStripe } from "@/lib/stripe";
@@ -14,6 +10,7 @@ import ProgressBar from "@/components/ProgressBar";
 import cn from "classnames";
 import { toasts } from "@/components/Toast";
 import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
+import { useCompletion } from "ai/react";
 
 function addErrorToast(title: string, description: string) {
   toasts.add(
@@ -31,12 +28,12 @@ function addErrorToast(title: string, description: string) {
 
 export default function Home() {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [itinerary, setItinerary] = React.useState<ItineraryType | null>(null);
+  const [itinerary, setItinerary] = React.useState<Output | null>(null);
   const [progress, setProgress] = React.useState(0);
 
-  const handleSubmit = (input: Input) => {
-    getItinerary(input);
-  };
+  const { complete } = useCompletion({
+    api: "/api/generate",
+  });
 
   const handlePayment = async () => {
     try {
@@ -46,7 +43,7 @@ export default function Home() {
 
       const response = await fetch("api/checkout/", {
         method: "post",
-        body: JSON.stringify({ itineraryId: itinerary.id }),
+        // body: JSON.stringify({ inputId: <id> }), ID not available for now
       });
 
       const json = await response.json();
@@ -63,13 +60,13 @@ export default function Home() {
 
       await stripe.redirectToCheckout({ sessionId: json.result.id });
     } catch (error) {
-      addErrorToast("Failed to start stransaction", "Please try again.");
+      addErrorToast("Failed to start transaction", "Please try again.");
     }
   };
 
-  const getItinerary = async (data: Input) => {
-    setIsLoading(true);
+  const createItinerary = async (data: Input) => {
     setItinerary(null);
+    setIsLoading(true);
 
     // progress bar simulation
     const interval = setInterval(() => {
@@ -82,27 +79,22 @@ export default function Home() {
     }, 1000);
 
     try {
-      const response = await fetch("api/itinerary/", {
-        method: "post",
-        body: JSON.stringify(data),
+      const completion = await complete("", {
+        body: data,
       });
 
-      const json = await response.json();
-
-      if (!json.ok) {
+      if (!completion) {
         throw new Error("Something went wrong");
       }
 
-      if (json.ok) {
-        setItinerary(itinerarySchema.parse(json.result));
-      }
+      setItinerary(output.parse(JSON.parse(completion)));
     } catch (error) {
       addErrorToast("Failed to create itinerary", "Please try again.");
     }
 
     setProgress(0);
-    clearInterval(interval);
     setIsLoading(false);
+    clearInterval(interval);
   };
 
   return (
@@ -128,7 +120,7 @@ export default function Home() {
             }
           )}
         >
-          <Form onSubmit={handleSubmit} disabled={isLoading} />
+          <Form onSubmit={createItinerary} disabled={isLoading} />
         </section>
 
         <section
@@ -159,7 +151,7 @@ export default function Home() {
           )}
         </section>
         {itinerary && (
-          <Itinerary itinerary={itinerary.output} onSubmit={handlePayment} />
+          <Itinerary itinerary={itinerary} onSubmit={handlePayment} />
         )}
       </div>
     </main>

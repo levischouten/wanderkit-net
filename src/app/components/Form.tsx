@@ -5,7 +5,7 @@ import DateRangePicker from "@/components/DateRangePicker";
 import { getLocalTimeZone, today } from "@internationalized/date";
 import React from "react";
 import Button from "@/components/Button";
-import { ArrowRightIcon, ArrowSmallRightIcon } from "@heroicons/react/20/solid";
+import { ArrowRightIcon } from "@heroicons/react/20/solid";
 
 type FormProps = {
   onSubmit: (value: Input) => void;
