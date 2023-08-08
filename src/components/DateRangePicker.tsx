@@ -29,6 +29,7 @@ import { useRangeCalendarState } from "react-stately";
 import {
   createCalendar,
   getDayOfWeek,
+  getLocalTimeZone,
   getWeeksInMonth,
   isSameDay,
 } from "@internationalized/date";
@@ -39,6 +40,7 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/20/solid";
 import Button from "./Button";
+import { DAY_IN_MS } from "@/app/schema";
 
 function RangeCalendar(props: RangeCalendarProps<DateValue>) {
   let { locale } = useLocale();
@@ -112,6 +114,16 @@ type CalendarCellProps = {
 
 function CalendarCell({ state, date }: CalendarCellProps) {
   let ref = React.useRef<HTMLDivElement>(null);
+
+  // limit date range to 5 days ahead
+  const isInRange = state.anchorDate
+    ? date.toDate(getLocalTimeZone()).getTime() -
+        state.anchorDate.toDate(getLocalTimeZone()).getTime() <=
+        DAY_IN_MS * 4 &&
+      date.toDate(getLocalTimeZone()).getTime() >
+        state.anchorDate.toDate(getLocalTimeZone()).getTime()
+    : true;
+
   let {
     cellProps,
     buttonProps,
@@ -120,7 +132,7 @@ function CalendarCell({ state, date }: CalendarCellProps) {
     isDisabled,
     isUnavailable,
     formattedDate,
-  } = useCalendarCell({ date }, state, ref);
+  } = useCalendarCell({ date, isDisabled: !isInRange }, state, ref);
 
   let isSelectionStart = state.highlightedRange
     ? isSameDay(date, state.highlightedRange.start)

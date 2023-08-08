@@ -1,6 +1,6 @@
 import z from "zod";
 
-const DAY_IN_MS = 24 * 60 * 60 * 1000;
+export const DAY_IN_MS = 24 * 60 * 60 * 1000;
 
 export const input = z
   .object({
