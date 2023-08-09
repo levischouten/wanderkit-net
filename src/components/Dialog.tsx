@@ -10,8 +10,8 @@ interface DialogProps extends AriaDialogProps {
 }
 
 export default function Dialog({ title, children, ...props }: DialogProps) {
-  let ref = React.useRef(null);
-  let { dialogProps, titleProps } = useDialog(props, ref);
+  const ref = React.useRef(null);
+  const { dialogProps, titleProps } = useDialog(props, ref);
 
   return (
     <div {...dialogProps} ref={ref} className="outline-none">

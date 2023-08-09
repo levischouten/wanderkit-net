@@ -39,18 +39,17 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/20/solid";
 import Button from "./Button";
-import { DAY_IN_MS } from "@/app/schema";
 
 function RangeCalendar(props: RangeCalendarProps<DateValue>) {
-  let { locale } = useLocale();
-  let state = useRangeCalendarState({
+  const { locale } = useLocale();
+  const state = useRangeCalendarState({
     ...props,
     locale,
     createCalendar,
   });
 
-  let ref = React.useRef<HTMLDivElement>(null);
-  let { calendarProps, prevButtonProps, nextButtonProps, title } =
+  const ref = React.useRef<HTMLDivElement>(null);
+  const { calendarProps, prevButtonProps, nextButtonProps, title } =
     useRangeCalendar(props, state, ref);
 
   return (
@@ -74,10 +73,10 @@ type CalendarGridProps = {
 } & AriaCalendarGridProps;
 
 function CalendarGrid({ state, ...props }: CalendarGridProps) {
-  let { locale } = useLocale();
-  let { gridProps, headerProps, weekDays } = useCalendarGrid(props, state);
+  const { locale } = useLocale();
+  const { gridProps, headerProps, weekDays } = useCalendarGrid(props, state);
 
-  let weeksInMonth = getWeeksInMonth(state.visibleRange.start, locale);
+  const weeksInMonth = getWeeksInMonth(state.visibleRange.start, locale);
 
   return (
     <table {...gridProps} className="flex-1" cellPadding="0">
@@ -112,9 +111,9 @@ type CalendarCellProps = {
 } & AriaCalendarCellProps;
 
 function CalendarCell({ state, date }: CalendarCellProps) {
-  let ref = React.useRef<HTMLDivElement>(null);
+  const ref = React.useRef<HTMLDivElement>(null);
 
-  let {
+  const {
     cellProps,
     buttonProps,
     isSelected,
@@ -124,18 +123,18 @@ function CalendarCell({ state, date }: CalendarCellProps) {
     formattedDate,
   } = useCalendarCell({ date }, state, ref);
 
-  let isSelectionStart = state.highlightedRange
+  const isSelectionStart = state.highlightedRange
     ? isSameDay(date, state.highlightedRange.start)
     : isSelected;
-  let isSelectionEnd = state.highlightedRange
+  const isSelectionEnd = state.highlightedRange
     ? isSameDay(date, state.highlightedRange.end)
     : isSelected;
 
-  let { locale } = useLocale();
-  let dayOfWeek = getDayOfWeek(date, locale);
-  let isRoundedLeft =
+  const { locale } = useLocale();
+  const dayOfWeek = getDayOfWeek(date, locale);
+  const isRoundedLeft =
     isSelected && (isSelectionStart || dayOfWeek === 0 || date.day === 1);
-  let isRoundedRight =
+  const isRoundedRight =
     isSelected &&
     (isSelectionEnd ||
       dayOfWeek === 6 ||

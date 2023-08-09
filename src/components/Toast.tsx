@@ -22,7 +22,7 @@ export const toasts = new ToastQueue<React.ReactNode>({
 });
 
 export default function GlobalToastRegion() {
-  let state = useToastQueue<React.ReactNode>(toasts);
+  const state = useToastQueue<React.ReactNode>(toasts);
 
   return state.visibleToasts.length > 0
     ? ReactDOM.createPortal(<ToastRegion state={state} />, document.body)
@@ -34,8 +34,8 @@ type ToastProps<T> = AriaToastProps<T> & {
 };
 
 function Toast<T extends React.ReactNode>({ state, ...props }: ToastProps<T>) {
-  let ref = React.useRef(null);
-  let { toastProps, titleProps, closeButtonProps } = useToast(
+  const ref = React.useRef(null);
+  const { toastProps, titleProps, closeButtonProps } = useToast(
     props,
     state,
     ref
@@ -63,8 +63,8 @@ function ToastRegion<T extends React.ReactNode>({
   state,
   ...props
 }: ToastRegionProps<T>) {
-  let ref = React.useRef(null);
-  let { regionProps } = useToastRegion(props, state, ref);
+  const ref = React.useRef(null);
+  const { regionProps } = useToastRegion(props, state, ref);
 
   return (
     <div

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <main className="flex flex-col gap-6 max-w-2xl">
+    <div className="flex flex-col gap-6 max-w-2xl">
       <section className="flex flex-col gap-4  items-start">
         <h1 className="text-4xl lg:text-5xl font-bold">About us</h1>
         <p className="font-medium">Welcome to WanderKit.net!</p>
@@ -38,6 +38,6 @@ export default function Page() {
           priority
         ></Image>
       </section>
-    </main>
+    </div>
   );
 }

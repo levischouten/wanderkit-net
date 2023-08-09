@@ -1,10 +1,8 @@
-import "./globals.css";
+import "@/app/globals.css";
 import type { Metadata } from "next";
-import { Inter, Open_Sans } from "next/font/google";
-import cn from "classnames";
+import { Open_Sans } from "next/font/google";
 import Script from "next/script";
 import GlobalToastRegion from "@/components/Toast";
-import Header from "./components/Header";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -36,13 +34,7 @@ export default function RootLayout({
         </>
       )}
 
-      <body
-        className={cn(
-          openSans.className,
-          "p-6 lg:p-12 md:max-w-xl lg:max-w-7xl mx-auto"
-        )}
-      >
-        <Header />
+      <body className={openSans.className}>
         {children}
         <GlobalToastRegion />
       </body>

@@ -15,8 +15,8 @@ type ModalProps = {
 } & AriaModalOverlayProps;
 
 function Modal({ state, children, ...props }: ModalProps) {
-  let ref = React.useRef(null);
-  let { modalProps, underlayProps } = useModalOverlay(props, state, ref);
+  const ref = React.useRef(null);
+  const { modalProps, underlayProps } = useModalOverlay(props, state, ref);
 
   return (
     <Overlay>
@@ -48,8 +48,8 @@ export function ModalTrigger({
   className,
   ...props
 }: ModalTriggerProps) {
-  let state = useOverlayTriggerState(props);
-  let { triggerProps, overlayProps } = useOverlayTrigger(
+  const state = useOverlayTriggerState(props);
+  const { triggerProps, overlayProps } = useOverlayTrigger(
     { type: "dialog" },
     state
   );

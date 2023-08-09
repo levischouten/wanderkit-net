@@ -2,16 +2,15 @@
 
 import { useSelectState } from "react-stately";
 import { AriaSelectProps, HiddenSelect, useSelect } from "react-aria";
-import React from "react";
 import Button from "./Button";
 import Popover from "./Popover";
 import ListBox from "./ListBox";
+import React from "react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 export default function Select(props: AriaSelectProps<object>) {
-  // Create state based on the incoming props
   let state = useSelectState(props);
 
-  // Get props for child elements from useSelect
   let ref = React.useRef(null);
   let { labelProps, triggerProps, valueProps, menuProps } = useSelect(
     props,
@@ -20,7 +19,7 @@ export default function Select(props: AriaSelectProps<object>) {
   );
 
   return (
-    <div className="inline-block">
+    <div className="flex flex-col gap-2">
       <div {...labelProps}>{props.label}</div>
       <HiddenSelect
         isDisabled={props.isDisabled}
@@ -29,14 +28,18 @@ export default function Select(props: AriaSelectProps<object>) {
         label={props.label}
         name={props.name}
       />
-      <Button {...triggerProps}>
+      <Button
+        {...triggerProps}
+        ref={ref}
+        className="flex justify-between gap-2 py-2 px-4 border rounded border-gray-300 min-w-[150px]"
+      >
         <span {...valueProps}>
           {state.selectedItem
             ? state.selectedItem.rendered
             : "Select an option"}
         </span>
-        <span aria-hidden="true" className="pl-2">
-          ▼
+        <span aria-hidden="true">
+          <ChevronDownIcon className="w-6 h-6" />
         </span>
       </Button>
       {state.isOpen && (

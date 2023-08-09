@@ -6,7 +6,7 @@ export default function Blogs() {
   allBlogs.map((blog) => blog.title);
 
   return (
-    <main className="flex flex-col gap-20 max-w-2xl">
+    <div className="flex flex-col gap-20 max-w-2xl">
       <section className="flex flex-col gap-2">
         <h1 className="text-4xl lg:text-5xl font-bold mb-4">Blogs</h1>
         <p className="font-medium">
@@ -46,6 +46,6 @@ export default function Blogs() {
           );
         })}
       </section>
-    </main>
+    </div>
   );
 }

@@ -30,6 +30,7 @@
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
     "ics": "^3.2.0",
+    "little-state-machine": "^4.8.0",
     "mailersend": "^2.2.0",
     "micro": "^10.0.1",
     "micro-cors": "^0.1.1",

@@ -11,7 +11,7 @@ type ProgressBarProps = {
 };
 
 export default function ProgressBar(props: ProgressBarProps) {
-  let {
+  const {
     label,
     showValueLabel = !!label,
     value,
@@ -19,10 +19,10 @@ export default function ProgressBar(props: ProgressBarProps) {
     maxValue = 100,
   } = props;
 
-  let { progressBarProps, labelProps } = useProgressBar(props);
+  const { progressBarProps, labelProps } = useProgressBar(props);
 
-  let percentage = (value - minValue) / (maxValue - minValue);
-  let barWidth = `${Math.round(percentage * 100)}%`;
+  const percentage = (value - minValue) / (maxValue - minValue);
+  const barWidth = `${Math.round(percentage * 100)}%`;
 
   return (
     <div {...progressBarProps} className="w-full rounded-md">

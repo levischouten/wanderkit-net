@@ -44,7 +44,7 @@ export default async function Blog({ params }: BlogProps) {
   }
 
   return (
-    <main className="flex flex-col gap-12">
+    <div className="flex flex-col gap-12">
       <article className="flex flex-col gap-4 max-w-2xl">
         <h1 className="text-4xl font-bold">{blog.title}</h1>
         <p className="text-lg">{blog.description}</p>
@@ -68,6 +68,6 @@ export default async function Blog({ params }: BlogProps) {
           Try now!
         </Link>
       </div>
-    </main>
+    </div>
   );
 }
