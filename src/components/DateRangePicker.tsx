@@ -29,7 +29,6 @@ import { useRangeCalendarState } from "react-stately";
 import {
   createCalendar,
   getDayOfWeek,
-  getLocalTimeZone,
   getWeeksInMonth,
   isSameDay,
 } from "@internationalized/date";
