@@ -89,9 +89,7 @@ export default function Form() {
         >
           Final step <ArrowRightIcon className="w-5 h-5" />
         </Button>
-        <p className="text-gray-600">
-          * We will fill the first 5 days of your trip.
-        </p>
+        <p className="text-gray-600"></p>
       </form>
     </div>
   );

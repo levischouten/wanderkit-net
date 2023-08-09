@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import Script from "next/script";
 import GlobalToastRegion from "@/components/Toast";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -18,26 +19,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      {process.env.NODE_ENV !== "development" && (
-        <>
-          <Script src="https://www.googletagmanager.com/gtag/js?id=G-NHG3FG5J1Z" />
-          <Script id="google-analytics">
-            {`
+    <ClerkProvider>
+      <html lang="en">
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-NHG3FG5J1Z" />
+        <Script id="google-analytics">
+          {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
  
           gtag('config', 'G-NHG3FG5J1Z');
         `}
-          </Script>
-        </>
-      )}
+        </Script>
 
-      <body className={openSans.className}>
-        {children}
-        <GlobalToastRegion />
-      </body>
-    </html>
+        <body className={openSans.className}>
+          {children}
+          <GlobalToastRegion />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

@@ -3,7 +3,7 @@
 import MenuButton from "@/components/MenuButton";
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Item } from "react-stately";
 
 const items = [
@@ -14,6 +14,7 @@ const items = [
 
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <header className="flex items-center w-full justify-between px-6 py-6 max-w-7xl mx-auto">
@@ -42,20 +43,22 @@ export default function Header() {
           ))}
         </div>
       </div>
-      <div className="flex gap-2">
-        <Link
-          href="/login"
-          className="border rounded border-indigo-500 text-indigo-500 px-4 py-2"
-        >
-          Login
-        </Link>
-        <Link
-          href="/signup"
-          className="rounded bg-indigo-500 text-white px-4 py-2"
-        >
-          Sign Up
-        </Link>
-      </div>
+      {!pathname.includes("/auth/") && (
+        <div className="flex gap-2">
+          <Link
+            href={process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL!}
+            className="border rounded border-indigo-500 text-indigo-500 px-4 py-2"
+          >
+            Login
+          </Link>
+          <Link
+            href={process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL!}
+            className="rounded bg-indigo-500 text-white px-4 py-2"
+          >
+            Sign Up
+          </Link>
+        </div>
+      )}
     </header>
   );
 }
