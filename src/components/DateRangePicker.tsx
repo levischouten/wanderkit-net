@@ -115,15 +115,6 @@ type CalendarCellProps = {
 function CalendarCell({ state, date }: CalendarCellProps) {
   let ref = React.useRef<HTMLDivElement>(null);
 
-  // limit date range to 5 days ahead
-  const isInRange = state.anchorDate
-    ? date.toDate(getLocalTimeZone()).getTime() -
-        state.anchorDate.toDate(getLocalTimeZone()).getTime() <=
-        DAY_IN_MS * 4 &&
-      date.toDate(getLocalTimeZone()).getTime() >
-        state.anchorDate.toDate(getLocalTimeZone()).getTime()
-    : true;
-
   let {
     cellProps,
     buttonProps,
@@ -132,7 +123,7 @@ function CalendarCell({ state, date }: CalendarCellProps) {
     isDisabled,
     isUnavailable,
     formattedDate,
-  } = useCalendarCell({ date, isDisabled: !isInRange }, state, ref);
+  } = useCalendarCell({ date }, state, ref);
 
   let isSelectionStart = state.highlightedRange
     ? isSameDay(date, state.highlightedRange.start)
