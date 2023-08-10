@@ -1,38 +1,34 @@
 "use client";
 
+import { Destination, destination } from "@/app/schema";
 import Button from "@/components/Button";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GlobalState, useStateMachine } from "little-state-machine";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
-export const destination = z.object({
-  destination: z.string().min(1, { message: "Please provide a destination" }),
-  description: z.string().min(1, { message: "Please provide a description" }),
-});
-
-type Destination = z.infer<typeof destination>;
-
-function updateDestination(state: GlobalState, payload: any) {
-  return state;
+function updateDestination(state: GlobalState, destination: Destination) {
+  return { ...state, destination };
 }
 
 export default function Form() {
   const router = useRouter();
 
-  const { actions } = useStateMachine({ updateDestination });
+  const { actions, state } = useStateMachine({ updateDestination });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Destination>({
     resolver: zodResolver(destination),
+    defaultValues: state.destination,
   });
+
   const onSubmit = (data: Destination) => {
     actions.updateDestination(data);
-    router.push("/onboarding/duration");
+    router.push(process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL!);
   };
 
   return (

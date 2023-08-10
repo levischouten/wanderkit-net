@@ -1,11 +1,12 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
+import { currentUser } from "@clerk/nextjs";
 
-export default function Home() {
+export default async function Home() {
+  const user = await currentUser();
+
   return (
     <div className="flex flex-col gap-12 lg:flex-row lg:items-start justify-center">
       <section className="flex flex-col gap-8 max-w-lg items-start">
@@ -23,7 +24,7 @@ export default function Home() {
           </p>
         </div>
         <Link
-          href="/onboarding/destination"
+          href={user ? "/dashboard" : "/onboarding/destination"}
           className=" bg-indigo-500 text-white rounded py-2 px-4 flex gap-2 items-center justify-center"
         >
           Get Started <ArrowRightIcon className="w-5 h-5" />

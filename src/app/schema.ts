@@ -82,6 +82,30 @@ export const itineraries = z.object({
   activated: z.boolean().default(false),
 });
 
+export const destination = z.object({
+  destination: z.string().min(1, { message: "Please provide a destination" }),
+  description: z.string().min(1, { message: "Please provide a description" }),
+});
+
+export const duration = z
+  .object({
+    arrival: z.union([
+      z.literal("morning"),
+      z.literal("afternoon"),
+      z.literal("evening"),
+      z.literal("night"),
+    ]),
+    startDate: z.string().min(1, { message: "Please fill in a startDate" }),
+    endDate: z.string().min(1, { message: "Please fill in a endDate" }),
+  })
+  .refine(({ endDate, startDate }) => new Date(endDate) > new Date(startDate), {
+    message: "End date must be after start date",
+    path: ["endDate"],
+  });
+
+export type Duration = z.infer<typeof duration>;
+export type Destination = z.infer<typeof destination>;
+
 export type Input = z.infer<typeof input>;
 export type Output = z.infer<typeof output>;
 export type Itineraries = z.infer<typeof itineraries>;

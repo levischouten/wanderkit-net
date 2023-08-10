@@ -7,47 +7,31 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { GlobalState, useStateMachine } from "little-state-machine";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { getLocalTimeZone, today } from "@internationalized/date";
 import { Item } from "react-stately";
 import Select from "@/components/Select";
+import { duration, Duration } from "@/app/schema";
 
 export const DAY_IN_MS = 24 * 60 * 60 * 1000;
 
 export const DAYTIMES = ["morning", "afternoon", "evening", "night"] as const;
 
-export const duration = z
-  .object({
-    arrival: z.union([
-      z.literal("morning"),
-      z.literal("afternoon"),
-      z.literal("evening"),
-      z.literal("night"),
-    ]),
-    startDate: z.string().min(1, { message: "Please fill in a startDate" }),
-    endDate: z.string().min(1, { message: "Please fill in a endDate" }),
-  })
-  .refine(({ endDate, startDate }) => new Date(endDate) > new Date(startDate), {
-    message: "End date must be after start date",
-    path: ["endDate"],
-  });
-
-type Duration = z.infer<typeof duration>;
-
-function updateDuration(state: GlobalState, payload: any) {
-  return state;
+function updateDuration(state: GlobalState, duration: Duration) {
+  return { ...state, duration };
 }
 
 export default function Form() {
   const router = useRouter();
 
-  const { actions } = useStateMachine({ updateDuration });
+  const { actions, state } = useStateMachine({ updateDuration });
+
   const {
     handleSubmit,
     formState: { errors },
     setValue,
   } = useForm<Duration>({
     resolver: zodResolver(duration),
+    defaultValues: state.duration,
   });
   const onSubmit = (data: Duration) => {
     actions.updateDuration(data);
